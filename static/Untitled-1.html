@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitoring System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Monitoring System</h1>
+    <button onclick="startPredictions()">Start Predictions</button>
+    <h2>Anomalies</h2>
+    <table id="anomaliesTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Timestamp</th>
+                <th>Variable</th>
+                <th>Valeur Prédite</th>
+                <th>Valeur Lue</th>
+                <th>Différence</th>
+                <th>Seuil</th>
+                <th>Taux de Changement</th>
+                <th>RUL</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        async function startPredictions() {
+            const response = await fetch('/start');
+            const data = await response.json();
+            alert(data.message);
+            loadAnomalies();
+        }
+
+        async function loadAnomalies() {
+            const response = await fetch('/anomalies/');
+            const anomalies = await response.json();
+            const tableBody = document.getElementById('anomaliesTable').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = '';
+            anomalies.forEach(anomaly => {
+                const row = tableBody.insertRow();
+                row.insertCell(0).innerText = anomaly.id;
+                row.insertCell(1).innerText = anomaly.date;
+                row.insertCell(2).innerText = anomaly.timestamp;
+                row.insertCell(3).innerText = anomaly.variable;
+                row.insertCell(4).innerText = anomaly.valeur_predite;
+                row.insertCell(5).innerText = anomaly.valeur_lue;
+                row.insertCell(6).innerText = anomaly.difference;
+                row.insertCell(7).innerText = anomaly.seuil;
+                row.insertCell(8).innerText = anomaly.taux_changement;
+                row.insertCell(9).innerText = anomaly.rul;
+            });
+        }
+
+        // Load anomalies initially
+        loadAnomalies();
+    </script>
+</body>
+</html>
