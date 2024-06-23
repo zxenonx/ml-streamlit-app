@@ -239,7 +239,6 @@ def predict_on_generated_data():
                     subject = "Alerte : Différence importante dans le courant moteur 1"
                     body = f"La différence entre la valeur prédite ({prediction_courant_moteur1_denormalized}) et la valeur lue ({rms_courant_moteur1_denormalized}) pour le courant moteur 1 dépasse le seuil."
                     send_alert(subject, body)
-
                 # Préparer les données d'entrée normalisées pour la prédiction du courant moteur 2
                 input_data_courant_moteur2 = np.array(
                     [[rms_values["sequence_courant_moteur2"], rms_values["sequence_charge_moteur2"], rms_values["sequence_env_temperature"], rms_values["sequence_humidite"]]])
