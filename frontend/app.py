@@ -2,6 +2,9 @@ import requests
 import streamlit as st
 import pandas as pd
 
+DEBUG = True
+PROD_URL = "https://ml-streamlit-app.onrender.com"
+
 st.title("📊 Visualisation app")
 
 st.write(
@@ -9,13 +12,13 @@ st.write(
 )
 
 def start_prediction():
-    data = requests.get("http://localhost:8000/start/")
+    data = requests.get("https://ml-streamlit-app.onrender.com/start/")
     print(data.json())
     return data.json()
 
 
 def fetch_anomalies():
-    data = requests.get("http://localhost:8000/anomalies/")
+    data = requests.get("https://ml-streamlit-app.onrender.com/anomalies/")
     print(data.json())
     data = data.json()
     
